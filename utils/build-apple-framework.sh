@@ -51,11 +51,13 @@ function build_host_hermesc {
 function configure_apple_framework {
   local build_cli_tools enable_bitcode
 
-  if [[ $1 == iphoneos || $1 == catalyst || $1 == visionos ]]; then
-    enable_bitcode="true"
-  else
-    enable_bitcode="false"
-  fi
+  # if [[ $1 == iphoneos || $1 == catalyst || $1 == visionos ]]; then
+  #   enable_bitcode="true"
+  # else
+  #   enable_bitcode="false"
+  # fi
+  enable_bitcode="false"
+
   if [[ $1 == macosx ]]; then
     build_cli_tools="true"
   else
