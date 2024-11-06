@@ -20,6 +20,7 @@ if command_exists "cmake"; then
   else
     BUILD_SYSTEM="Unix Makefiles"
   fi
+  echo "build using $BUILD_SYSTEM"
 else
   echo >&2 'CMake is required to install Hermes, install it with: brew install cmake'
   exit 1
@@ -96,7 +97,7 @@ function build_apple_framework {
   if [[ "$BUILD_SYSTEM" == "Ninja" ]]; then
     (cd "./build_$1" && ninja install/strip)
   else
-    (cd "./build_$1" && make install/strip)
+    (cd "./build_$1" && make install/strip -- VERBOSE=1)
   fi
 }
 
