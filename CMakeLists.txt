@@ -42,6 +42,10 @@ if (POLICY CMP0026)
   cmake_policy(SET CMP0026 OLD)
 endif()
 
+if(APPLE)
+  set(CMAKE_MACOSX_BUNDLE OFF)  # 全局关闭bundle生成
+endif()
+
 # Has to be set before `project` as per documentation
 # https://cmake.org/cmake/help/latest/variable/CMAKE_OSX_SYSROOT.html
 set(CMAKE_OSX_SYSROOT ${HERMES_APPLE_TARGET_PLATFORM})

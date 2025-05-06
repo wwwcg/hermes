@@ -69,7 +69,6 @@ function configure_apple_framework {
     -DHERMES_APPLE_TARGET_PLATFORM:STRING="$1" \
     -DCMAKE_OSX_ARCHITECTURES:STRING="$2" \
     -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING="$3" \
-    -DHERMES_ENABLE_DEBUGGER:BOOLEAN=true \
     -DHERMES_ENABLE_INTL:BOOLEAN=true \
     -DHERMES_ENABLE_LIBFUZZER:BOOLEAN=false \
     -DHERMES_ENABLE_FUZZILLI:BOOLEAN=false \
@@ -81,7 +80,9 @@ function configure_apple_framework {
     -DHERMES_ENABLE_TOOLS:BOOLEAN="$build_cli_tools" \
     -DIMPORT_HERMESC:PATH="$PWD/build_host_hermesc/ImportHermesc.cmake" \
     -DCMAKE_INSTALL_PREFIX:PATH=../destroot \
-    -DCMAKE_BUILD_TYPE="$BUILD_TYPE"
+    -DHERMES_ENABLE_DEBUGGER:BOOLEAN=false \
+    -DCMAKE_BUILD_TYPE="$BUILD_TYPE" \
+    -DCMAKE_CXX_FLAGS="-fno-c++-static-destructors"  # disable static destructors
 }
 
 # Utility function to build an Apple framework
@@ -119,9 +120,10 @@ function create_universal_framework {
   mkdir universal
   xcodebuild -create-xcframework $args -output "universal/hermes.xcframework"
 
-  for platform in $@; do
-    rm -r "$platform"
-  done
+  # do not remove for keep dsyms
+  # for platform in $@; do
+  #   rm -r "$platform"
+  # done
 
   cd - || exit 1
 }
