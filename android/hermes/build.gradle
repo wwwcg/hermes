@@ -26,7 +26,7 @@ android {
         arguments "-DIMPORT_HERMESC=${rootProject.ext.hermesC}"
         arguments "-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=True"
         arguments "-DHERMES_BUILD_SHARED_JSI=True"
-        targets "libhermes"
+        targets "libhermes", "jsi"
       }
     }
     ndk {
@@ -106,9 +106,9 @@ android {
   }
 
   packagingOptions {
-    exclude "**/libc++_shared.so"
-    exclude "**/libjsi.so"
-    exclude "**/libfbjni.so"
+    // exclude "**/libc++_shared.so"  // 注释掉，允许包含libc++_shared.so
+    // exclude "**/libjsi.so" // 注释掉，允许包含libjsi.so
+    // exclude "**/libfbjni.so"  // 注释掉，允许包含libfbjni.so
   }
 
   afterEvaluate {
